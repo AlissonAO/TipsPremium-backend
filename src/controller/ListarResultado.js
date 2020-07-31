@@ -11,7 +11,7 @@ module.exports = {
         const dataHorarioFim = new Date(data).toISOString().split("T")[0] + " 23:59:59";
         const result = await connection.select(
             'nomegalgo', 'datainicio', 'datafim', 'Hist_pista_betfair.pista', 'Hist_pista_betfair.grade', 'trap', 'odd_lay', 'odd_back'
-            , 'probabilidade', 'din_investido AS Total Galgo', 'win', 'total_dinheiro AS total da corrida '
+            , 'probabilidade', 'din_investido AS Total Galgo', 'win', 'total_dinheiro AS Total da corrida '
         ).from('Hist_galgo_betfair')
             .innerJoin('Hist_pista_betfair', 'id_hist_pista', 'Hist_pista_betfair.id')
             .where('Hist_pista_betfair.pais', 'GB')
@@ -21,10 +21,13 @@ module.exports = {
         for (item in result) {
             result[item]['datainicio'] = dataFormata(result[item]['datainicio'])
             result[item]['datafim'] = dataFormata(result[item]['datafim'])
+            result[item]['Total Galgo'] = moneyFormate(result[item]['Total Galgo'])
+            result[item]['Total da corrida'] = moneyFormate(result[item]['Total da corrida'])
+            result[item]['probabilidade'] = porcentFormate(result[item]['probabilidade'])
             if (result[item]['win'] === true) {
-                result[item]['win'] = "Venceu"
+                result[item]['win'] = "WIN"
             } else {
-                result[item]['win'] = "Perdeu"
+                result[item]['win'] = "LOSS"
             }
         }
 
@@ -37,5 +40,18 @@ module.exports = {
 
 const dataFormata = (data) => {
     return format(new Date(data), "H:mm:ss a");
+}
+
+const moneyFormate = (valor) =>{
+    if(valor === null){
+        return "00.0"
+    }else{
+        return valor.toLocaleString('pt-BR');
+
+    }
+}
+
+const porcentFormate = (dados) =>{
+    return dados + " %"
 }
 
