@@ -15,6 +15,7 @@ module.exports = {
         for (t in response) {
           response = response[t]['result'];
         }
+
         console.log(response);
         return res.json(response);
       });
