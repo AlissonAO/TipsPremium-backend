@@ -4,10 +4,11 @@ const tls = require('tls');
 const { json } = require('express');
 
 const routers = express.Router();
-const historico = require('./controller/CadastrarHistorico');
+const corrida = require('./controller/ConsultarCorrida');
 const corridasBetfair = require('./controller/CorridasBetfair');
 const listarResultado = require('./controller/ListarResultado');
 const ConsultarMercado = require('./controller/ConsultarMercado');
+const listarHistorico = require('./controller/ListarHistorico');
 const serve = require('../src/index');
 
 routers.get('/teste', async (request, response) => {
@@ -20,15 +21,17 @@ routers.get('/teste', async (request, response) => {
 });
 
 //Obter a proxima corrida
-routers.get('/listarCorridas', corridasBetfair.listaProximaCorridasBetfair);
+// routers.get('/listarCorridas', corridasBetfair.listaProximaCorridasBetfair);
 
 //Obter os mercaod da corrida
 routers.get('/listarMercado', ConsultarMercado.listaMercado);
 
-//Obter Historico
-routers.get('/listaCorrida', historico.obterProximaCorrida);
+//LIsta as corridas
+routers.get('/listarCorridas', corrida.obterProximaCorrida);
 
 routers.get('/listarResultados', listarResultado.listarCorrida);
+//Obter Historico dos Galgos
+routers.get('/listarHistorico', listarHistorico.listarHistorico);
 
 // routers.get('/testebet', (req, res) => {
 //   /*	Socket connection options */
