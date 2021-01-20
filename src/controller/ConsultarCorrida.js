@@ -9,27 +9,29 @@ const { zonedTimeToUtc } = require('date-fns-tz');
 const listarHistorico = require('../controller/ListarHistorico');
 module.exports = {
   async obterProximaCorrida(req, res) {
-    const parsedDate = parseISO(new Date().toISOString());
+    let dateAtual = new Date();
+    dateAtual.setHours(dateAtual.getHours() - 1);
+    const parsedDate = parseISO(dateAtual.toISOString());
     const znDate = zonedTimeToUtc(parsedDate, {
       timeZone: 'America/Sao_Paulo',
     });
     const query = {
       DataCorrida: {
-        // $gte: znDate,
-        $gte: new Date('2020-11-19T09:36:00.000Z'),
+        $gte: znDate,
+        // $gte: new Date('2021-01-19T18:30:38.417Z'),
+        // $lte: new Date('2021-01-19T18:31:38.417Z'),
       },
     };
     const sort = {
       DataCorrida: 1,
     };
     try {
-      console.log(znDate);
-      await client.connect();
-      const database = client
+      const database = await client
         .db('premiumTips')
         .collection('historicoCalculado');
+      // await database.deleteMany(query);
+      var resultado = await database.find(query).sort(sort).limit(12).toArray();
 
-      var resultado = await database.find(query).sort(sort).limit(10).toArray();
       for (const dog in resultado) {
         const listDogs = resultado[dog]['dogs'];
 
@@ -39,8 +41,34 @@ module.exports = {
           listName[trap] = listDogs[key]['nome'];
         }
         const listHistDog = await listarHistorico.listaHist(listName);
-        Object.assign(resultado[dog], listHistDog);
+        // console.log(JSON.stringify(listHistDog));
+        // for (const key in listHistDog) {
+        for (const keydog in listDogs) {
+          listaRetorno = [];
+          var listHist = {};
+          Object.values(listHistDog).forEach((value) => {
+            value.forEach((i) => {
+              if (listDogs[keydog]['nome'] === i['Nome']) {
+                listaRetorno.push(i);
+              }
+            });
+            listHist['hist'] = listaRetorno;
+            Object.assign(listDogs[keydog], listHist);
+          });
+        }
+        listFavorito = [];
+        var cont = 1;
+        for (i = 0; i <= 6; i++) {
+          for (const favorito in listDogs) {
+            if (listDogs[favorito].analitico.Favorito === cont) {
+              listFavorito.push(listDogs[favorito].trap);
+            }
+          }
+          cont++;
+        }
+        resultado[dog]['Favoritos'] = listFavorito;
       }
+
       return res.json(resultado);
     } catch (e) {
       console.log('leaving catch block');

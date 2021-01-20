@@ -1,5 +1,6 @@
 const connection = require('../database/connection');
 const { format, parseISO } = require('date-fns');
+const { pt } = require('date-fns/locale/pt');
 
 module.exports = {
   async listarHistorico(req, res) {
@@ -27,7 +28,7 @@ module.exports = {
   },
 
   async listaHist(list) {
-    const listRetorno = {};
+    const listRetorno = [];
     const result = await connection
       .select(
         'dogname AS Nome',
@@ -35,17 +36,18 @@ module.exports = {
         'track',
         'dis',
         'trp',
+        'fin',
         'split',
         'bends',
         'remaks',
         'wght AS peso',
-        'grade'
+        'grade',
+        'caltm'
       )
       .from('HistoricoGB')
       .whereIn('HistoricoGB.dogname', Object.values(list))
       .orderBy('date_corrida', 'desc');
 
-    var listHist = {};
     for (const keylist in list) {
       var count = 0;
       var listDogHist = [];
@@ -59,9 +61,10 @@ module.exports = {
           }
         }
       }
-      listHist[keylist.toString()] = listDogHist;
-      listRetorno.hist = listHist;
+      // listHist[keylist.toString()] = listDogHist;
+      listRetorno.push(listDogHist);
     }
+    // console.log(listRetorno);
     return listRetorno;
   },
 };
