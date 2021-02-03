@@ -17,7 +17,7 @@ module.exports = {
             response = response[t]['result'];
           }
 
-          // console.log(response);
+          console.log(response);
           return res.json(response);
         });
     } catch (e) {
