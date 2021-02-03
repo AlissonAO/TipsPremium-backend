@@ -12,12 +12,17 @@ const server = http.Server(app);
 // setupWebSocket(server);
 
 client.connect();
-betfair = new Betfair(
-  'XQzvGbEmSL9JwR7n',
-  'psyalisson@gmail.com',
-  'alisson1985',
-  true
-);
+
+teste();
+
+async function teste() {
+  betfair = await new Betfair(
+    'XQzvGbEmSL9JwR7n',
+    'psyalisson@gmail.com',
+    'alisson1985',
+    true
+  );
+}
 
 app.use(cors());
 

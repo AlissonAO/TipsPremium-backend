@@ -1,5 +1,4 @@
 const express = require('express');
-const Betfair = require('../apiBetFair/index');
 const { response } = require('express');
 const GREYHOUND_EVENT_TYPE_ID = 4339;
 
