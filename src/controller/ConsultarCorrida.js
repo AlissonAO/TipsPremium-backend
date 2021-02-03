@@ -18,7 +18,7 @@ module.exports = {
     const query = {
       DataCorrida: {
         $gte: znDate,
-        // $gte: new Date('2021-01-19T18:30:38.417Z'),
+        // $gte: new Date('2021-02-01T00:30:38.417Z'),
         // $lte: new Date('2021-01-19T18:31:38.417Z'),
       },
     };

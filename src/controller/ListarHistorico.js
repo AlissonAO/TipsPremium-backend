@@ -5,7 +5,6 @@ const { pt } = require('date-fns/locale/pt');
 module.exports = {
   async listarHistorico(req, res) {
     const name = JSON.parse(req.query.name);
-    console.log(name);
     const result = await connection
       .select(
         'dogname AS Nome',
@@ -23,7 +22,6 @@ module.exports = {
       .whereIn('HistoricoGB.dogname', name)
       .orderBy('date_corrida', 'desc');
 
-    console.log(result);
     return res.json(result);
   },
 

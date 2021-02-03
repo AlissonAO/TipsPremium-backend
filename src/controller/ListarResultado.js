@@ -6,6 +6,7 @@ const { MongoClient } = require('mongodb');
 module.exports = {
   async listarCorrida(req, res) {
     const { data } = req.query;
+    // const formattedDate = format(new Date(data), 'yyyy-MM-dd HH:mm:ss');
     const dataHoraInicio =
       new Date(data).toISOString().split('T')[0] + ' 00:00:00';
     const dataHorarioFim =
@@ -48,7 +49,6 @@ module.exports = {
       }
     }
 
-    console.log(result);
     return res.json(result);
   },
 };
