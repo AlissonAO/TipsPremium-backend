@@ -1,6 +1,7 @@
 const express = require('express');
 const { response } = require('express');
 const GREYHOUND_EVENT_TYPE_ID = 4339;
+const Betfair = require('../../src/apiBetFair/index');
 
 module.exports = {
   async listaMercado(req, res) {
@@ -16,7 +17,7 @@ module.exports = {
             response = response[t]['result'];
           }
 
-          console.log(response);
+          console.log('retorno dentro de casa ' + response);
           return res.json(response);
         });
     } catch (e) {

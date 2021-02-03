@@ -47,6 +47,7 @@ class Betfair {
           this.keepAliveReset();
         }, this.keepAliveTimeout);
       }
+      console.log(response);
     });
   }
 
@@ -147,9 +148,8 @@ class Betfair {
    * @param {object} opts - optional parameters (refer to betfair docs)
    * @return {Promise<Array>} - Promise that resolves with the results in an array
    */
-  listMarketBook(marketIds, priceProjection, opts = {}) {
-    console.log(marketIds, priceProjection);
-    return this.devApi(
+  async listMarketBook(marketIds, priceProjection, opts = {}) {
+    return await this.devApi(
       'listMarketBook',
       Object.assign(
         {
@@ -159,9 +159,14 @@ class Betfair {
         },
         opts
       )
-    ).then((response) => {
-      return response;
-    });
+    )
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
   }
 
   /**
