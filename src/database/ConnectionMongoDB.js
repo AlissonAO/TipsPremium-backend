@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb');
 const config = require('../../MongConfig');
 const client = new MongoClient(config, {
   useNewUrlParser: true,
