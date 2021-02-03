@@ -4,14 +4,14 @@ const http = require('http');
 const routes = require('./routes');
 const { setupWebSocket } = require('./webSocket/webSocketio');
 const Betfair = require('../src/apiBetFair/index');
-const client = require('./database/ConnectionMongoDB');
+// const client = require('./database/ConnectionMongoDB');
 
 const app = express();
 const server = http.Server(app);
 
 // setupWebSocket(server);
 
-client.connect();
+// client.connect();
 betfair = new Betfair(
   'XQzvGbEmSL9JwR7n',
   'psyalisson@gmail.com',

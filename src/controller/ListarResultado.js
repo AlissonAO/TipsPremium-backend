@@ -1,7 +1,7 @@
 const connection = require('../database/connection');
 const { format, parseISO } = require('date-fns');
 const { da } = require('date-fns/locale');
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 
 module.exports = {
   async listarCorrida(req, res) {
