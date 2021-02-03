@@ -17,7 +17,6 @@ module.exports = {
             response = response[t]['result'];
           }
 
-          console.log('retorno dentro de casa ' + response);
           return res.json(response);
         });
     } catch (e) {

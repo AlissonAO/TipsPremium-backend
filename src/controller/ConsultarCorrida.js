@@ -9,7 +9,7 @@ const listarHistorico = require('../controller/ListarHistorico');
 module.exports = {
   async obterProximaCorrida(req, res) {
     let dateAtual = new Date();
-    dateAtual.setHours(dateAtual.getHours() - 1);
+    dateAtual.setHours(dateAtual.getHours() - 3);
     const parsedDate = parseISO(dateAtual.toISOString());
     const znDate = zonedTimeToUtc(parsedDate, {
       timeZone: 'America/Sao_Paulo',
