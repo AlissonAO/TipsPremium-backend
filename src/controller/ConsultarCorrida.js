@@ -2,7 +2,6 @@ const express = require('express');
 const Betfair = require('../apiBetFair/index');
 const GREYHOUND_EVENT_TYPE_ID = 4339;
 const market_filters = require('../Util/market_filter');
-const { response } = require('express');
 const client = require('../database/ConnectionMongoDB');
 const { parseISO } = require('date-fns');
 const { zonedTimeToUtc } = require('date-fns-tz');
@@ -15,6 +14,7 @@ module.exports = {
     const znDate = zonedTimeToUtc(parsedDate, {
       timeZone: 'America/Sao_Paulo',
     });
+    console.log('Data atual Consulta corridas ' + znDate);
     const query = {
       DataCorrida: {
         $gte: znDate,
