@@ -21,10 +21,10 @@ module.exports = {
         'trap',
         'odd_lay',
         'odd_back',
-        'probabilidade',
-        'din_investido AS Total Galgo',
         'win',
-        'total_dinheiro AS Total da corrida '
+        'odd_back_place',
+        'odd_lay_place',
+        'win_place'
       )
       .from('Hist_galgo_betfair')
       .innerJoin('Hist_pista_betfair', 'id_hist_pista', 'Hist_pista_betfair.id')
@@ -35,20 +35,24 @@ module.exports = {
     for (item in result) {
       result[item]['datainicio'] = dataFormata(result[item]['datainicio']);
       result[item]['datafim'] = dataFormata(result[item]['datafim']);
-      result[item]['Total Galgo'] = moneyFormate(result[item]['Total Galgo']);
-      result[item]['Total da corrida'] = moneyFormate(
-        result[item]['Total da corrida']
-      );
-      result[item]['probabilidade'] = porcentFormate(
-        result[item]['probabilidade']
-      );
+      // result[item]['Total Galgo'] = moneyFormate(result[item]['Total Galgo']);
+      // result[item]['Total da corrida'] = moneyFormate(
+      //   result[item]['Total da corrida']
+      // );
+      // result[item]['probabilidade'] = porcentFormate(
+      //   result[item]['probabilidade']
+      // );
       if (result[item]['win'] === true) {
         result[item]['win'] = 'WIN';
       } else {
         result[item]['win'] = 'LOSS';
       }
+      if (result[item]['win_place'] === true) {
+        result[item]['win_place'] = 'WIN';
+      } else {
+        result[item]['win_place'] = 'LOSS';
+      }
     }
-
     return res.json(result);
   },
 };
