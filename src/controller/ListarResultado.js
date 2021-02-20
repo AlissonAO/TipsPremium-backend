@@ -1,7 +1,7 @@
 const connection = require('../database/connection');
 const { format, parseISO } = require('date-fns');
-const { da } = require('date-fns/locale');
-// const { MongoClient } = require('mongodb');
+const client = require('../database/ConnectionMongoDB');
+const { zonedTimeToUtc } = require('date-fns-tz');
 
 module.exports = {
   async listarCorrida(req, res) {
@@ -54,6 +54,32 @@ module.exports = {
       }
     }
     return res.json(result);
+  },
+
+  async listarResultado(req, res) {
+    const { data } = req.query;
+    console.log('Listar Resultados ' + new Date(data));
+    const query = {
+      DataCorrida: {
+        // $gte: dateAtual,
+        $gte: new Date(new Date(data)),
+        $lte: new Date(new Date(data).setHours(new Date(data).getHours() + 23)),
+      },
+      statusResultado: { $in: ['C', 'P'] },
+    };
+    const sort = {
+      DataCorrida: -1,
+    };
+    try {
+      const database = await client
+        .db('premiumTips')
+        .collection('historicoCalculado');
+      var resultado = await database.find(query).sort(sort).toArray();
+      return res.json(resultado);
+    } catch (e) {
+      console.log('leaving catch block');
+      console.log(e);
+    }
   },
 };
 

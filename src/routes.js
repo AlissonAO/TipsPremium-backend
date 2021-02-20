@@ -29,7 +29,8 @@ routers.get('/listarMercado', ConsultarMercado.listaMercado);
 //LIsta as corridas
 routers.get('/listarCorridas', corrida.obterProximaCorrida);
 
-routers.get('/listarResultados', listarResultado.listarCorrida);
+// routers.get('/listarResultados', listarResultado.listarCorrida);
+routers.get('/listarResultados', listarResultado.listarResultado);
 //Obter Historico dos Galgos
 routers.get('/listarHistorico', listarHistorico.listarHistorico);
 
