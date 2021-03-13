@@ -28,6 +28,8 @@ routers.get('/listarMercado', ConsultarMercado.listaMercado);
 
 //LIsta as corridas
 routers.get('/listarCorridas', corrida.obterProximaCorrida);
+routers.get('/listarCorridaID', corrida.obterCorridaId);
+routers.get('/listarTodasCorridas', corrida.obterTodasCorridas);
 
 // routers.get('/listarResultados', listarResultado.listarCorrida);
 routers.get('/listarResultados', listarResultado.listarResultado);
