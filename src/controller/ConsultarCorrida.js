@@ -10,7 +10,7 @@ const ObjectID = require('mongodb').ObjectID;
 module.exports = {
   async obterProximaCorrida(req, res) {
     let dateAtual = new Date();
-   dateAtual.setHours(dateAtual.getHours() - 3);
+   dateAtual.setHours(dateAtual.getHours());
     const parsedDate = parseISO(dateAtual.toISOString());
     const znDate = zonedTimeToUtc(parsedDate, {
       timeZone: 'America/Sao_Paulo',
