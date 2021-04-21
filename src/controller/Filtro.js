@@ -26,7 +26,7 @@ module.exports = {
     const ultimoTempo = [];
     const mediaTempo = [];
     const topSplit = [];
-    const mediaSplit = [];
+    const mediaSplit = [1];
     const recupMedia = [];
 
     where = {};
@@ -145,17 +145,14 @@ module.exports = {
     ];
 
     try {
-      var resultado = await database
-        .aggregate(queryFavprito)
-        .limit(10)
-        .toArray();
+      var resultado = await database.aggregate(queryFavprito).toArray();
 
       console.log(resultado);
       return res.json(resultado);
     } catch (error) {
       console.log(error);
     } finally {
-      client.close();
+      // client.close();
     }
   },
 };

@@ -9,6 +9,7 @@ const corridasBetfair = require('./controller/CorridasBetfair');
 const listarResultado = require('./controller/ListarResultado');
 const ConsultarMercado = require('./controller/ConsultarMercado');
 const listarHistorico = require('./controller/ListarHistorico');
+const filtro = require('./controller/Filtro');
 const serve = require('../src/index');
 
 routers.get('/teste', async (request, response) => {
@@ -35,6 +36,8 @@ routers.get('/listarTodasCorridas', corrida.obterTodasCorridas);
 routers.get('/listarResultados', listarResultado.listarResultado);
 //Obter Historico dos Galgos
 routers.get('/listarHistorico', listarHistorico.listarHistorico);
+//Filtro
+routers.get('/filtro', filtro.filtro);
 
 // routers.get('/testebet', (req, res) => {
 //   /*	Socket connection options */

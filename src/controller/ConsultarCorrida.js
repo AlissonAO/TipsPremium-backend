@@ -10,7 +10,7 @@ const ObjectID = require('mongodb').ObjectID;
 module.exports = {
   async obterProximaCorrida(req, res) {
     let dateAtual = new Date();
-    dateAtual.setHours(dateAtual.getHours());
+    dateAtual.setHours(dateAtual.getHours() + 1);
     const parsedDate = parseISO(dateAtual.toISOString());
     const znDate = zonedTimeToUtc(parsedDate, {
       timeZone: 'America/Sao_Paulo',
@@ -19,7 +19,7 @@ module.exports = {
     const query = {
       DataCorrida: {
         $gte: znDate,
-        // $gte: new Date('2021-03-07T00:30:38.417Z'),
+        // $gte: new Date('2021-03-31T00:30:38.417Z'),
         // $lte: new Date('2021-01-19T18:31:38.417Z'),
       },
     };
@@ -30,7 +30,9 @@ module.exports = {
       const database = await client
         .db('premiumTips')
         .collection('historicoCalculado');
+
       // await database.deleteMany(query);
+
       var resultado = await database.find(query).sort(sort).limit(10).toArray();
 
       for (const dog in resultado) {
@@ -59,6 +61,8 @@ module.exports = {
     } catch (e) {
       console.log('leaving catch block');
       console.log(e);
+    } finally {
+      // client.close();
     }
   },
 
@@ -66,7 +70,7 @@ module.exports = {
     const { id } = req.query;
     console.log('Obtento consulta pelo ID' + id);
     const query = {
-      _id: ObjectID(id),
+      _id: new ObjectID(id.trim()),
     };
 
     try {
@@ -101,6 +105,8 @@ module.exports = {
     } catch (e) {
       console.log('leaving catch block');
       console.log(e);
+    } finally {
+      // client.close();
     }
   },
 
@@ -110,7 +116,7 @@ module.exports = {
       DataCorrida: {
         // $gte: znDate,
         $gte: new Date(dataHoje),
-        // $gte: new Date('2021-03-12T00:31:38.417Z'),
+        // $gte: new Date('2021-03-28T00:31:38.417Z'),
       },
     };
     const sort = {
@@ -138,6 +144,8 @@ module.exports = {
     } catch (e) {
       console.log('leaving catch block');
       console.log(e);
+    } finally {
+      // client.close();
     }
   },
 };
