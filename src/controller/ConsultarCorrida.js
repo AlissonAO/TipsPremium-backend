@@ -16,10 +16,10 @@ module.exports = {
     const znDate = zonedTimeToUtc(parsedDate, {
       timeZone: 'America/Sao_Paulo',
     });
-    console.log('Data atual Consulta corridas ' + znDate);
+    console.log('Data atual Consulta corridas ' + dateAtual);
     const query = {
       DataCorrida: {
-        $gte: znDate,
+        $gte: dateAtual,
         // $gte: new Date('2021-03-31T00:30:38.417Z'),
         // $lte: new Date('2021-01-19T18:31:38.417Z'),
       },
