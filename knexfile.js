@@ -18,7 +18,8 @@ module.exports = {
     client: 'postgresql',
     searchPath: ['knex', 'public'],
     connection: {
-      host : 'tips.chgdctshl9nz.sa-east-1.rds.amazonaws.com',
+      //host : 'tips.chgdctshl9nz.sa-east-1.rds.amazonaws.com',
+      host: 'tips.cqm9b7amos8q.sa-east-1.rds.amazonaws.com', //tips01
       user : 'tips',
       password : 'alisson123',
       database : 'tips'
