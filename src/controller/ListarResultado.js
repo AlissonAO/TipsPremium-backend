@@ -60,10 +60,6 @@ module.exports = {
     const { data } = req.query;
     console.log('Listar Resultados ' + new Date(data));
 
-    const dataInicio = new Date(
-      new Date(data).setHours(new Date(data).getHours() - 4)
-    );
-
     const dataFm = new Date(
       new Date(data).setHours(new Date(data).getHours() + 23)
     );
@@ -77,7 +73,7 @@ module.exports = {
         'Hist_pista_betfair.id',
         'Hist_galgo_betfair.id_hist_pista'
       )
-      .whereBetween('Hist_pista_betfair.data_corrida', [dataInicio, dataFm])
+      .whereBetween('Hist_pista_betfair.data_corrida', [data, dataFm])
       .whereIn('Hist_pista_betfair.statusresultado', ['C', 'P'])
       .whereNotIn('Hist_pista_betfair.pista', [
         'Limerick',
@@ -92,7 +88,7 @@ module.exports = {
         objetoRetorno = {};
         listDogs = [];
         objetoRetorno.TrackName = result[corrida].pista;
-        objetoRetorno.Grade = String(result[corrida].grade).substring(0, 2);
+        objetoRetorno.Grade = String(result[corrida].grade).substring(0, 3);
         objetoRetorno.Dis = String(result[corrida].grade).substring(3);
         objetoRetorno.HoraCorridaUK = result[corrida].horacorrida_uk;
         objetoRetorno.HoraCorridaBR = result[corrida].horacorrida_br;
@@ -105,14 +101,14 @@ module.exports = {
             dog.trap = result[i].trap;
             dog.resultado =
               result[i].posicaofinal !== null ? result[i].posicaofinal : '';
-            if (result[i].posicaofinal === null && result[i].win === true) {
-              dog.resultado = '1';
-            } else if (
-              result[i].posicaofinal === null &&
-              result[i].win_place === true
-            ) {
-              dog.resultado = '2';
-            }
+            // if (result[i].posicaofinal === null && result[i].win === true) {
+            //   dog.resultado = '1';
+            // } else if (
+            //   result[i].posicaofinal === null &&
+            //   result[i].win_place === true
+            // ) {
+            //   dog.resultado = '2';
+            // }
             dog.odd_Back =
               result[i].odd_back !== null ? result[i].odd_back : '';
             dog.odd_Lay = result[i].odd_lay !== null ? result[i].odd_lay : '';
@@ -125,7 +121,7 @@ module.exports = {
       }
     }
 
-    console.log(corridaFormatada);
+    // console.log(corridaFormatada);
     return res.json(corridaFormatada);
 
     // const query = {
