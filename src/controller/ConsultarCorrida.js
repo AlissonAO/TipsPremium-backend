@@ -75,7 +75,7 @@ module.exports = {
     };
 
     try {
-      const database = await client
+      const database = client
         .db('premiumTips')
         .collection('historicoCalculado');
       var resultado = await database.find(query).toArray();
@@ -112,12 +112,13 @@ module.exports = {
   },
 
   async obterTodasCorridas(req, res) {
+    console.log('Obtendo todas as corridas');
     const dataHoje = format(new Date(), 'yyyy-MM-dd');
     const query = {
       DataCorrida: {
-        // $gte: znDate,
+        // // $gte: znDate,
         $gte: new Date(dataHoje),
-        // $gte: new Date('2021-03-28T00:31:38.417Z'),
+        // $gte: new Date('2021-07-27T00:31:38.417Z'),
       },
     };
     const sort = {

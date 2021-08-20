@@ -1,19 +1,55 @@
-const socketio = require('socket.io');
 var tls = require('tls');
 const { conectarBetfairSocket, test } = require('../controller/BetfairSocket');
 const { json } = require('express');
 const ConsultarMercado = require('../controller/ConsultarMercado');
-const Betfair = require('../apiBetFair/index');
 const { response } = require('express');
 const url = require('url');
+const socketio = require('socket.io');
+const Betfair = require('../apiBetFair');
+const ConsultarCorrida = require('../controller/ConsultarCorrida');
+
+var options = {
+  host: 'stream-api.betfair.com',
+  port: 443,
+};
 
 exports.setupWebSocket = (server) => {
-  const io = socketio(server);
+  const io = socketio(server, {
+    cors: { origin: '*' },
+  });
+  var tempo;
+  var id = '0';
   io.on('connection', (socket) => {
-    console.log(socket.id);
-    // socket.emit('mensagem', 'teste');
+    // socket.on('disconnecte', (reason) => {
+    //   console.log('disconecting ');
+    //   // clearTimeout(tempo);
+    //   console.log('disconect');
+    //   return true;
+    // });
+
+    console.log('Fora ' + socket.handshake.query.idMaket);
+    clearTimeout(tempo);
+    updateAllClients();
+
+    async function updateAllClients() {
+      console.log('Conectando a betfair iD ' + socket.handshake.query.idMaket);
+      await betfair
+        .listMarketBook(['1.185715894'], {
+          priceData: ['EX_BEST_OFFERS'],
+        })
+        .then((response) => {
+          for (t in response) {
+            response = response[t]['result'];
+          }
+          socket.emit('mensagem', response);
+          tempo = setTimeout(updateAllClients, 5000);
+          console.log(response);
+          return response;
+        });
+    }
   });
 };
+
 /*	Subscribe to order/market stream */
 // const io = socketio(server);
 // io.of('').on('connection', (socket) => {

@@ -4,6 +4,7 @@
 var https = require('https'),
   querystring = require('querystring');
 
+var token;
 class Betfair {
   /**
    * @contructor
@@ -24,15 +25,19 @@ class Betfair {
     this.login();
   }
 
+  getToken() {
+    return token;
+  }
+
   /**
    * @param {string} [username] - Betfair username
    * @param {string} [password] - Betfair password
    * @param {boolean} [keepAlive] - Keep token alive till logout
    */
-  login(username, password, keepAlive) {
+  async login(username, password, keepAlive) {
     this.keepAlive = keepAlive || this.keepAlive;
 
-    return this.request(
+    return await this.request(
       'identitysso.betfair.com',
       '/api/login',
       'application/x-www-form-urlencoded',
@@ -42,12 +47,13 @@ class Betfair {
       }
     ).then((response) => {
       this.authKey = response.token;
+      token = response.token;
       if (this.keepAlive) {
         setTimeout(() => {
           this.keepAliveReset();
         }, this.keepAliveTimeout);
       }
-      console.log(response);
+      return response.token;
     });
   }
 
@@ -556,7 +562,7 @@ class Betfair {
         options.headers['Content-Length'] = params.length;
       }
 
-      console.log(this.authKey);
+      // console.log(this.authKey);
       if (this.authKey) {
         options.headers['X-Authentication'] = this.authKey;
       }

@@ -3,13 +3,13 @@ const cors = require('cors');
 const http = require('http');
 const routes = require('./routes');
 const { setupWebSocket } = require('./webSocket/webSocketio');
+const { conectarBetfairSocket } = require('./controller/BetfairSocket');
 const Betfair = require('../src/apiBetFair/index');
-const client = require('./database/ConnectionMongoDB');
-
+const clientMongo = require('./database/ConnectionMongoDB');
 const app = express();
-const server = http.Server(app);
+var tls = require('tls');
 
-// setupWebSocket(server);
+const server = http.Server(app);
 
 betfair = new Betfair(
   'XQzvGbEmSL9JwR7n',
@@ -17,21 +17,13 @@ betfair = new Betfair(
   'alisson1985',
   true
 );
-client.connect();
-// teste();
+setupWebSocket(server);
 
-// async function teste() {
-//   betfair = await new Betfair(
-//     'XQzvGbEmSL9JwR7n',
-//     'psyalisson@gmail.com',
-//     'alisson1985',
-//     true
-//   );
-// }
+clientMongo.connect();
 
 app.use(cors());
 
 app.use(express.json());
 app.use(routes);
 
-app.listen(process.env.PORT || 8080);
+server.listen(process.env.PORT || 8080);
