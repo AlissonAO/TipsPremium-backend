@@ -1,7 +1,6 @@
 // Update with your config settings.
 
 module.exports = {
-
   // development: {
   //   client: 'sqlite3',
   //   connection: {
@@ -13,17 +12,17 @@ module.exports = {
 
   // },
 
-
   development: {
     client: 'postgresql',
     searchPath: ['knex', 'public'],
     connection: {
-      host : 'tips.chgdctshl9nz.sa-east-1.rds.amazonaws.com',
-      user : 'tips',
-      password : 'alisson123',
-      database : 'tips'
+      //host: 'tips.chgdctshl9nz.sa-east-1.rds.amazonaws.com', // homol
+      host: 'tips.cqm9b7amos8q.sa-east-1.rds.amazonaws.com', //prod
+      user: 'tips',
+      password: 'alisson123',
+      database: 'tips',
     },
-   
+
     debug: false,
   },
 
@@ -58,5 +57,4 @@ module.exports = {
   //     tableName: 'knex_migrations'
   //   }
   // }
-
 };
