@@ -60,6 +60,10 @@ module.exports = {
     const { data } = req.query;
     console.log('Listar Resultados ' + new Date(data));
 
+    const dataInicio = new Date(
+      new Date(data).setHours(new Date(data).getHours() - 4)
+    );
+
     const dataFm = new Date(
       new Date(data).setHours(new Date(data).getHours() + 23)
     );
@@ -73,7 +77,7 @@ module.exports = {
         'Hist_pista_betfair.id',
         'Hist_galgo_betfair.id_hist_pista'
       )
-      .whereBetween('Hist_pista_betfair.data_corrida', [data, dataFm])
+      .whereBetween('Hist_pista_betfair.data_corrida', [dataInicio, dataFm])
       .whereIn('Hist_pista_betfair.statusresultado', ['C', 'P'])
       .whereNotIn('Hist_pista_betfair.pista', [
         'Limerick',
