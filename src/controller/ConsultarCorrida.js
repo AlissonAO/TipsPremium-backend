@@ -32,7 +32,7 @@ module.exports = {
         .db('premiumTips')
         .collection('historicoCalculado');
 
-      // await database.deleteMany(query);
+      //await database.deleteMany(query);
 
       var resultado = await database.find(query).sort(sort).limit(10).toArray();
 
