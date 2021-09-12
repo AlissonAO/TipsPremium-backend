@@ -17,7 +17,8 @@ module.exports = {
     searchPath: ['knex', 'public'],
     connection: {
       //host: 'tips.chgdctshl9nz.sa-east-1.rds.amazonaws.com', // homol
-      host: 'tips.cqm9b7amos8q.sa-east-1.rds.amazonaws.com', //prod
+      //host: 'tips.cqm9b7amos8q.sa-east-1.rds.amazonaws.com', //prod
+      host: '31.220.20.161', //prod
       user: 'tips',
       password: 'alisson123',
       database: 'tips',
