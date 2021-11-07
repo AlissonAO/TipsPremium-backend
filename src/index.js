@@ -14,7 +14,7 @@ const server = http.Server(app);
 betfair = new Betfair(
   'XQzvGbEmSL9JwR7n',
   'psyalisson@gmail.com',
-  'alisson1985',
+  'AliMit@123',
   true
 );
 setupWebSocket(server);
